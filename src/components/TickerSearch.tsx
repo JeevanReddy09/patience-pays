@@ -163,7 +163,7 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
             {isOpen && results.length > 0 && (
                 <div
                     ref={dropdownRef}
-                    className="absolute z-50 w-full mt-1 bg-[var(--color-bg-secondary)] border border-[var(--color-bg-tertiary)] rounded-xl shadow-lg overflow-hidden"
+                    className="absolute z-50 w-full mt-2 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl overflow-hidden"
                 >
                     {results.map((result, index) => (
                         <button
@@ -171,15 +171,15 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
                             type="button"
                             onClick={() => handleSelect(result)}
                             className={`w-full px-4 py-3 text-left flex items-center gap-3 transition-colors ${index === selectedIndex
-                                ? 'bg-[var(--color-primary)] text-white'
-                                : 'hover:bg-[var(--color-bg-tertiary)]'
+                                    ? 'bg-[var(--color-bg-hover)] text-[var(--color-text-primary)]'
+                                    : 'hover:bg-[var(--color-bg-hover)]'
                                 }`}
                         >
-                            <span className="font-bold text-sm min-w-[60px]">{result.symbol}</span>
+                            <span className="font-semibold text-sm min-w-[60px]">{result.symbol}</span>
                             <span className="text-sm text-[var(--color-text-secondary)] truncate flex-1">
                                 {result.name}
                             </span>
-                            <span className="text-xs px-2 py-0.5 rounded bg-[var(--color-bg-tertiary)] text-[var(--color-text-muted)]">
+                            <span className="text-xs px-2 py-1 rounded bg-[var(--color-bg-tertiary)] text-[var(--color-text-muted)] border border-[var(--color-border)]">
                                 {result.type}
                             </span>
                         </button>

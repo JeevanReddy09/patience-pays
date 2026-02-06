@@ -43,20 +43,20 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
     };
 
     return (
-        <div className="glass-card p-6 md:p-8">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold">Configure Your SIP</h2>
+        <div className="glass-card p-8 md:p-10">
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-bold tracking-tight">Configure Your SIP</h2>
                 <button
                     type="button"
                     onClick={handleDemoPreset}
                     className="btn-secondary text-sm py-2 px-4"
                 >
-                    📊 Demo Preset
+                    Demo
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Ticker Search */}
                     <TickerSearch value={ticker} onChange={setTicker} />
 
@@ -109,14 +109,14 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
                 </div>
 
                 {/* Execution Rule Info */}
-                <div className="bg-[var(--color-bg-tertiary)] rounded-lg p-4 text-sm text-[var(--color-text-secondary)]">
-                    <strong>Execution Rule:</strong> Buy at the closing price on the first trading day of each month
+                <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg p-4 text-sm text-[var(--color-text-muted)]">
+                    <strong className="text-[var(--color-text-secondary)]">Execution Rule:</strong> Buy at the closing price on the first trading day of each month
                 </div>
 
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="btn-primary w-full text-lg"
+                    className="btn-primary w-full text-base py-4"
                 >
                     {isLoading ? (
                         <span className="flex items-center justify-center gap-2">

@@ -87,32 +87,32 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen py-8 md:py-12">
+    <main className="min-h-screen py-12 md:py-20">
       <div className="container">
         {/* Hero Section */}
-        <header className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+        <header className="text-center mb-16 md:mb-20">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
             <span className="gradient-text">Patience Pays</span>
           </h1>
-          <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-[var(--color-text-secondary)] max-w-xl mx-auto leading-relaxed">
             Long-term investing rewards consistency. Backtest your SIP/DCA strategy and see how patience compounds over time.
           </p>
         </header>
 
         {/* Input Form */}
-        <section className="max-w-3xl mx-auto mb-12">
+        <section className="max-w-2xl mx-auto mb-16">
           <InputForm onSubmit={handleSubmit} isLoading={isLoading} />
         </section>
 
         {/* Error Display */}
         {error && (
-          <div className="max-w-3xl mx-auto mb-8">
-            <div className="glass-card p-4 border-l-4 border-[var(--color-danger)]">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">⚠️</span>
+          <div className="max-w-2xl mx-auto mb-12">
+            <div className="glass-card p-6 border-l-2 border-[var(--color-danger)]">
+              <div className="flex items-start gap-4">
+                <span className="text-xl">⚠️</span>
                 <div>
-                  <h4 className="font-semibold text-[var(--color-danger)]">Error</h4>
-                  <p className="text-sm text-[var(--color-text-secondary)]">{error}</p>
+                  <h4 className="font-semibold text-[var(--color-danger)] mb-1">Error</h4>
+                  <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{error}</p>
                 </div>
               </div>
             </div>

@@ -53,9 +53,9 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
     };
 
     return (
-        <div className="glass-card p-6">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                <h3 className="text-lg font-bold">📋 Monthly Purchase History</h3>
+        <div className="glass-card p-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <h3 className="text-2xl font-bold tracking-tight">Monthly Purchase History</h3>
                 <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                     <input
                         type="text"
@@ -68,7 +68,7 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
                         className="input-field text-sm py-2 px-4 sm:w-64"
                     />
                     <button onClick={onExportCSV} className="btn-secondary text-sm py-2 px-4">
-                        📥 Download CSV
+                        Download CSV
                     </button>
                 </div>
             </div>
@@ -77,29 +77,29 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
             <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                     <thead>
-                        <tr className="border-b border-[var(--color-bg-tertiary)]">
-                            <th className="text-left py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                        <tr className="border-b border-[var(--color-border)]">
+                            <th className="text-left py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Month
                             </th>
-                            <th className="text-left py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-left py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Buy Date
                             </th>
-                            <th className="text-right py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-right py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Price
                             </th>
-                            <th className="text-right py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-right py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Contribution
                             </th>
-                            <th className="text-right py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-right py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Shares
                             </th>
-                            <th className="text-right py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-right py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Cumulative
                             </th>
-                            <th className="text-right py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-right py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Value
                             </th>
-                            <th className="text-left py-3 px-2 text-[var(--color-text-secondary)] font-semibold">
+                            <th className="text-left py-3 px-2 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">
                                 Note
                             </th>
                         </tr>
@@ -108,7 +108,7 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
                         {paginatedRows.map((row, index) => (
                             <tr
                                 key={row.buyMonth}
-                                className={`border-b border-[var(--color-bg-tertiary)] hover:bg-[var(--color-bg-tertiary)] transition-colors ${row.note ? 'opacity-60' : ''
+                                className={`border-b border-[var(--color-border-light)] hover:bg-[var(--color-bg-hover)] transition-colors ${row.note ? 'opacity-60' : ''
                                     }`}
                             >
                                 <td className="py-3 px-2 font-medium">{row.buyMonth}</td>
@@ -139,8 +139,8 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex justify-between items-center mt-6 pt-4 border-t border-[var(--color-bg-tertiary)]">
-                    <p className="text-sm text-[var(--color-text-secondary)]">
+                <div className="flex justify-between items-center mt-6 pt-6 border-t border-[var(--color-border)]">
+                    <p className="text-sm text-[var(--color-text-muted)]">
                         Showing {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, filteredRows.length)} of{' '}
                         {filteredRows.length} rows
                     </p>
@@ -148,7 +148,7 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="btn-secondary py-2 px-3 text-sm disabled:opacity-50"
+                            className="btn-secondary py-2 px-3 text-sm disabled:opacity-30"
                         >
                             ←
                         </button>
@@ -167,9 +167,9 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
                                 <button
                                     key={pageNum}
                                     onClick={() => handlePageChange(pageNum)}
-                                    className={`py-2 px-3 text-sm rounded-lg ${currentPage === pageNum
-                                            ? 'bg-[var(--color-primary)] text-white'
-                                            : 'btn-secondary'
+                                    className={`py-2 px-3 text-sm rounded-lg transition-colors ${currentPage === pageNum
+                                        ? 'bg-[var(--color-primary)] text-[var(--color-bg-primary)]'
+                                        : 'btn-secondary'
                                         }`}
                                 >
                                     {pageNum}
@@ -179,7 +179,7 @@ export default function MonthlyTable({ monthly, ticker, onExportCSV }: MonthlyTa
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="btn-secondary py-2 px-3 text-sm disabled:opacity-50"
+                            className="btn-secondary py-2 px-3 text-sm disabled:opacity-30"
                         >
                             →
                         </button>
