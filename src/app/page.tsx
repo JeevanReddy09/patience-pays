@@ -328,6 +328,17 @@ export default function Home() {
     URL.revokeObjectURL(url);
   };
 
+  const handleDateFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    const target = event.currentTarget;
+    if (typeof target.showPicker === 'function') {
+      try {
+        target.showPicker();
+      } catch {
+        // ignore if browser blocks programmatic picker opening
+      }
+    }
+  };
+
   return (
     <div className='relative min-h-screen'>
       <div className='pointer-events-none absolute inset-0 overflow-hidden'>
@@ -395,7 +406,8 @@ export default function Home() {
                     type='date'
                     value={form.start}
                     onChange={updateField('start')}
-                    className='rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm'
+                    onFocus={handleDateFocus}
+                    className='date-input rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm'
                   />
                 </label>
                 <label className='grid gap-2 text-sm text-slate-700'>
@@ -404,7 +416,8 @@ export default function Home() {
                     type='date'
                     value={form.end}
                     onChange={updateField('end')}
-                    className='rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm'
+                    onFocus={handleDateFocus}
+                    className='date-input rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm'
                   />
                 </label>
               </div>

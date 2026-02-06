@@ -6,6 +6,7 @@ Long-term investing rewards consistency. Patience Pays lets you backtest a simpl
 - Next.js (TypeScript) with Tailwind
 - Recharts for charts
 - Yahoo Finance chart API (server-side fetch) with Stooq fallback
+- Local ticker search (NASDAQ + NYSE + AMEX) via JSON lookup
 
 ## Run locally
 1. npm install
@@ -14,10 +15,12 @@ Long-term investing rewards consistency. Patience Pays lets you backtest a simpl
 
 ## API
 GET /api/sip?ticker=GOOGL&start=2023-08-01&end=2026-02-05&amount=100&rule=first_trading_day_close
+GET /api/search?q=GOOGL
 
 ## Data sources
 - Primary: Yahoo Finance chart API (server-side fetch)
 - Fallback: Stooq daily CSV
+- Ticker universe: NASDAQ Trader Symbol Directory (NASDAQ + NYSE + AMEX) stored in `src/data/tickers.json`
 
 ## Caching
 In-memory cache with a 1-hour TTL keyed by ticker and date range.
@@ -32,3 +35,4 @@ In-memory cache with a 1-hour TTL keyed by ticker and date range.
 - Free data sources can be delayed or incomplete
 - Dividends and splits are not applied
 - Educational use only, not investment advice
+- Ticker search is local substring-based; misspellings will not match unless the query overlaps the symbol/name

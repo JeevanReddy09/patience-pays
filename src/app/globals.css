@@ -156,3 +156,17 @@ html[data-theme='dark'] .ticker-pill {
 html[data-theme='dark'] .ticker-loading {
   color: #9fb0c7;
 }
+
+.date-input {
+  appearance: auto;
+  -webkit-appearance: auto;
+  color-scheme: light;
+}
+
+html[data-theme='dark'] .date-input {
+  color-scheme: dark;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}

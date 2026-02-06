@@ -1,0 +1,58 @@
+export type TickerItem = {
+  symbol: string;
+  name: string;
+  type: string;
+  exchange: string;
+};
+
+export const fallbackTickers: TickerItem[] = [
+  { symbol: 'AAPL', name: 'Apple Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'MSFT', name: 'Microsoft Corp.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'GOOGL', name: 'Alphabet Inc. (Class A)', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'GOOG', name: 'Alphabet Inc. (Class C)', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'AMZN', name: 'Amazon.com Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'NVDA', name: 'NVIDIA Corp.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'META', name: 'Meta Platforms Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'TSLA', name: 'Tesla Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'BRK-B', name: 'Berkshire Hathaway Inc. (Class B)', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'V', name: 'Visa Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'JPM', name: 'JPMorgan Chase & Co.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'UNH', name: 'UnitedHealth Group Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'XOM', name: 'Exxon Mobil Corp.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'WMT', name: 'Walmart Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'JNJ', name: 'Johnson & Johnson', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'PG', name: 'Procter & Gamble Co.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'MA', name: 'Mastercard Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'HD', name: 'Home Depot Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'KO', name: 'Coca-Cola Co.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'PEP', name: 'PepsiCo Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'AVGO', name: 'Broadcom Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'COST', name: 'Costco Wholesale Corp.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'LLY', name: 'Eli Lilly and Co.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'ABBV', name: 'AbbVie Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'MRK', name: 'Merck & Co. Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'ORCL', name: 'Oracle Corp.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'CRM', name: 'Salesforce Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'NFLX', name: 'Netflix Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'AMD', name: 'Advanced Micro Devices Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'INTC', name: 'Intel Corp.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'CSCO', name: 'Cisco Systems Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'ADBE', name: 'Adobe Inc.', type: 'EQUITY', exchange: 'NASDAQ' },
+  { symbol: 'DIS', name: 'Walt Disney Co.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'NKE', name: 'Nike Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'PFE', name: 'Pfizer Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'T', name: 'AT&T Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'VZ', name: 'Verizon Communications', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'BAC', name: 'Bank of America Corp.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'GS', name: 'Goldman Sachs Group Inc.', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'MS', name: 'Morgan Stanley', type: 'EQUITY', exchange: 'NYSE' },
+  { symbol: 'QQQ', name: 'Invesco QQQ Trust', type: 'ETF', exchange: 'NASDAQ' },
+  { symbol: 'SPY', name: 'SPDR S&P 500 ETF Trust', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'VTI', name: 'Vanguard Total Stock Market ETF', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'VOO', name: 'Vanguard S&P 500 ETF', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'IVV', name: 'iShares Core S&P 500 ETF', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'DIA', name: 'SPDR Dow Jones Industrial Average ETF', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'IWM', name: 'iShares Russell 2000 ETF', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'EEM', name: 'iShares MSCI Emerging Markets ETF', type: 'ETF', exchange: 'NYSEARCA' },
+  { symbol: 'GLD', name: 'SPDR Gold Shares', type: 'ETF', exchange: 'NYSEARCA' }
+];
