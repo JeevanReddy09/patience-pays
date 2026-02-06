@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { computeSipFromDaily } from './sip';
 import { validateInputValues } from './validation';
 import type { MarketDaily, SipInputs } from './types';
@@ -8,7 +8,6 @@ const baseInputs: SipInputs = {
   amount: 100,
   start: '2024-01-01',
   end: '2024-01-31',
-  rule: 'first_trading_day_close',
   currency: 'USD'
 };
 
@@ -62,7 +61,6 @@ describe('SIP logic', () => {
       amount: '100',
       start: '2024-01-01',
       end: '2024-02-01',
-      rule: 'first_trading_day_close'
     });
     expect(validation.ok).toBe(false);
   });

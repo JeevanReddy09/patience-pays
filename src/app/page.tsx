@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
 import { monthlyRowsToCsv } from '@/lib/csv';
@@ -235,7 +235,6 @@ type FormState = {
   amount: string;
   start: string;
   end: string;
-  rule: string;
 };
 
 export default function Home() {
@@ -245,7 +244,6 @@ export default function Home() {
     amount: '100',
     start: '2023-08-01',
     end: today,
-    rule: 'first_trading_day_close'
   };
 
   const [form, setForm] = useState<FormState>(demoPreset);
@@ -272,7 +270,7 @@ export default function Home() {
   }, [data]);
 
   const updateField =
-    (field: keyof FormState) => (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    (field: keyof FormState) => (event: ChangeEvent<HTMLInputElement>) => {
       setForm((prev) => ({ ...prev, [field]: event.target.value }));
     };
 
@@ -286,7 +284,6 @@ export default function Home() {
       start: form.start,
       end: form.end,
       amount: form.amount,
-      rule: form.rule
     });
 
     try {
@@ -316,7 +313,7 @@ export default function Home() {
   const handleDownload = () => {
     if (!data) return;
     const csv = monthlyRowsToCsv(data.monthly);
-    const filename = `sip_${data.inputs.ticker}_${data.inputs.start}_to_${data.inputs.end}_first_trading_day_close.csv`;
+    const filename = `sip_${data.inputs.ticker}_${data.inputs.start}_to_${data.inputs.end}.csv`;
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -421,17 +418,6 @@ export default function Home() {
                   />
                 </label>
               </div>
-
-              <label className='grid gap-2 text-sm text-slate-700'>
-                Execution rule
-                <select
-                  value={form.rule}
-                  onChange={updateField('rule')}
-                  className='rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm'
-                >
-                  <option value='first_trading_day_close'>First trading day close</option>
-                </select>
-              </label>
             </div>
 
             <div className='mt-6 flex flex-wrap gap-3'>
@@ -490,7 +476,7 @@ export default function Home() {
                   Download CSV
                 </button>
                 <span className='text-xs text-slate-500'>
-                  {`Filename: sip_${data.inputs.ticker}_${data.inputs.start}_to_${data.inputs.end}_first_trading_day_close.csv`}
+                  {`Filename: sip_${data.inputs.ticker}_${data.inputs.start}_to_${data.inputs.end}.csv`}
                 </span>
               </div>
 

@@ -1,4 +1,4 @@
-﻿# Patience Pays
+# Patience Pays
 
 Long-term investing rewards consistency. Patience Pays lets you backtest a simple monthly SIP/DCA strategy into a stable stock and see how patience plus recurring contributions compound over time.
 
@@ -14,7 +14,7 @@ Long-term investing rewards consistency. Patience Pays lets you backtest a simpl
 3. Open http://localhost:3000
 
 ## API
-GET /api/sip?ticker=GOOGL&start=2023-08-01&end=2026-02-05&amount=100&rule=first_trading_day_close
+GET /api/sip?ticker=GOOGL&start=2023-08-01&end=2026-02-05&amount=100
 GET /api/search?q=GOOGL
 
 ## Data sources

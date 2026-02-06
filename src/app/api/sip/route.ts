@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { validateInputValues } from '@/lib/validation';
 import { getDailyPrices } from '@/lib/marketData';
 import { computeSipFromDaily } from '@/lib/sip';
@@ -12,7 +12,6 @@ export async function GET(request: NextRequest) {
     amount: searchParams.get('amount') ?? undefined,
     start: searchParams.get('start') ?? undefined,
     end: searchParams.get('end') ?? undefined,
-    rule: searchParams.get('rule') ?? undefined
   });
 
   if (!ok || !inputs) {

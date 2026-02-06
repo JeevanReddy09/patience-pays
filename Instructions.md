@@ -11,9 +11,7 @@ Monthly contribution (default $100)
 Start date (default 2023-08-01)
 
 End date (default today)
-
-Execution rule (default: “1st trading day close”)
-
+\r\n
 Optional: currency display (USD only for now)
 
 App outputs:
@@ -61,7 +59,7 @@ Contributions vs value (stacked or two-line)
 Optional: drawdown or rolling returns
 
 CSV export of the monthly table with a deterministic filename, like:
-sip_<TICKER>_<START>_to_<END>_first_trading_day_close.csv
+sip_<TICKER>_<START>_to_<END>.csv
 
 Product/UX requirements
 
@@ -126,7 +124,7 @@ API design
 
 Create an endpoint:
 
-GET /api/sip?ticker=GOOGL&start=2023-08-01&end=2026-02-05&amount=100&rule=first_trading_day_close
+GET /api/sip?ticker=GOOGL&start=2023-08-01&end=2026-02-05&amount=100
 
 Response JSON:
 

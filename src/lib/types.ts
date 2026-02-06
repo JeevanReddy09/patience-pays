@@ -1,11 +1,8 @@
-﻿export type Rule = 'first_trading_day_close';
-
 export interface SipInputs {
   ticker: string;
   amount: number;
   start: string;
   end: string;
-  rule: Rule;
   currency?: 'USD';
 }
 

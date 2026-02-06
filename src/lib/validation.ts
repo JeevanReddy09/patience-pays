@@ -1,5 +1,5 @@
-﻿import { isAfter, isValid, parseISO } from 'date-fns';
-import type { Rule, SipInputs } from './types';
+import { isAfter, isValid, parseISO } from 'date-fns';
+import type { SipInputs } from './types';
 
 const TICKER_REGEX = /^[A-Za-z0-9.-]{1,10}$/;
 
@@ -8,7 +8,6 @@ export function validateInputValues(values: {
   amount?: string | number;
   start?: string;
   end?: string;
-  rule?: string;
 }): { ok: boolean; errors: string[]; inputs?: SipInputs } {
   const errors: string[] = [];
   const tickerRaw = (values.ticker || '').trim().toUpperCase();
@@ -41,11 +40,6 @@ export function validateInputValues(values: {
     errors.push('Start date must be on or before the end date.');
   }
 
-  const ruleRaw = values.rule || 'first_trading_day_close';
-  if (ruleRaw !== 'first_trading_day_close') {
-    errors.push('Only the first trading day close rule is supported.');
-  }
-
   if (errors.length > 0) {
     return { ok: false, errors };
   }
@@ -55,7 +49,6 @@ export function validateInputValues(values: {
     amount: amountNum,
     start,
     end,
-    rule: ruleRaw as Rule,
     currency: 'USD'
   };
 
