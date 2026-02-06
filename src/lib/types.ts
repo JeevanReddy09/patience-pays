@@ -1,62 +1,50 @@
-// TypeScript interfaces for the Patience Pays SIP/DCA calculator
+﻿export type Rule = 'first_trading_day_close';
 
-export interface SIPInputs {
-    ticker: string;
-    monthlyContribution: number;
-    startDate: string; // YYYY-MM-DD
-    endDate: string; // YYYY-MM-DD
-    executionRule: 'first_trading_day_close';
-    currency: 'USD';
+export interface SipInputs {
+  ticker: string;
+  amount: number;
+  start: string;
+  end: string;
+  rule: Rule;
+  currency?: 'USD';
+}
+
+export interface MarketDaily {
+  date: string;
+  close: number;
 }
 
 export interface MonthlyRow {
-    buyMonth: string; // YYYY-MM
-    buyDate: string; // YYYY-MM-DD
-    closePrice: number;
-    contribution: number;
-    sharesBought: number;
-    cumulativeShares: number;
-    valueAtMonth: number;
-    note?: string;
+  buy_month: string;
+  buy_date: string | null;
+  close_price: number | null;
+  contribution: number;
+  shares_bought: number;
+  cumulative_shares: number;
+  note?: string;
+  value_at_month?: number;
 }
 
-export interface SIPSummary {
-    startDate: string;
-    endDate: string;
-    numberOfContributions: number;
-    totalContributed: number;
-    totalShares: number;
-    lastClosePrice: number;
-    lastCloseDate: string;
-    accountValue: number;
-    gainLoss: number;
-    gainLossPercent: number;
-    cagr: number;
+export interface SipSummary {
+  start: string;
+  end: string;
+  number_of_contributions: number;
+  total_contributed: number;
+  total_shares: number;
+  last_close: number;
+  last_close_date: string;
+  account_value: number;
+  gain_loss: number;
+  cagr?: number;
 }
 
-export interface SIPResponse {
-    inputs: SIPInputs;
-    summary: SIPSummary;
-    monthly: MonthlyRow[];
-    meta: {
-        dataSource: string;
-        lastCloseDate: string;
-        warnings: string[];
-    };
-}
-
-export interface StockDataPoint {
-    date: Date;
-    open: number;
-    high: number;
-    low: number;
-    close: number;
-    volume: number;
-    adjClose: number;
-}
-
-export interface CachedData<T> {
-    data: T;
-    timestamp: number;
-    ttl: number;
+export interface SipResponse {
+  inputs: SipInputs;
+  summary: SipSummary;
+  monthly: MonthlyRow[];
+  meta: {
+    data_source: string;
+    last_close_date: string;
+    warnings: string[];
+  };
 }

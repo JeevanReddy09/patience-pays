@@ -1,34 +1,27 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+﻿import './globals.css';
+import { Fraunces, Space_Grotesk } from 'next/font/google';
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const heading = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  weight: ['400', '600', '700']
 });
 
-export const metadata: Metadata = {
-  title: "Patience Pays | SIP/DCA Backtester",
-  description: "Backtest your Systematic Investment Plan (SIP/DCA) strategy and see how patience and recurring investing compounds over time.",
-  keywords: ["SIP", "DCA", "Dollar Cost Averaging", "Investment", "Backtester", "Stock Market"],
-  authors: [{ name: "Patience Pays" }],
-  openGraph: {
-    title: "Patience Pays | SIP/DCA Backtester",
-    description: "Long-term investing rewards consistency. Backtest your strategy today.",
-    type: "website",
-  },
+const body = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-body',
+  weight: ['400', '500', '600', '700']
+});
+
+export const metadata = {
+  title: 'Patience Pays',
+  description: 'Long-term investing rewards consistency.'
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
-        {children}
-      </body>
+    <html lang='en' className={`${heading.variable} ${body.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
