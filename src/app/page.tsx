@@ -1,65 +1,185 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import InputForm, { FormData } from '@/components/InputForm';
+import SummaryTiles from '@/components/SummaryTiles';
+import Charts from '@/components/Charts';
+import MonthlyTable from '@/components/MonthlyTable';
+import WhyThisWorks from '@/components/WhyThisWorks';
+import { SIPResponse } from '@/lib/types';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<SIPResponse | null>(null);
+
+  const handleSubmit = async (formData: FormData) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const params = new URLSearchParams({
+        ticker: formData.ticker,
+        start: formData.startDate,
+        end: formData.endDate,
+        amount: formData.monthlyContribution.toString(),
+        rule: 'first_trading_day_close',
+      });
+
+      const response = await fetch(`/api/sip?${params}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to calculate SIP');
+      }
+
+      setResult(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      setResult(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleExportCSV = () => {
+    if (!result) return;
+
+    const headers = [
+      'buy_month',
+      'buy_date',
+      'close_price',
+      'contribution',
+      'shares_bought',
+      'cumulative_shares',
+      'value_at_month',
+      'note',
+    ];
+
+    const rows = result.monthly.map((row) => [
+      row.buyMonth,
+      row.buyDate,
+      row.closePrice.toFixed(2),
+      row.contribution.toFixed(2),
+      row.sharesBought.toFixed(6),
+      row.cumulativeShares.toFixed(6),
+      row.valueAtMonth.toFixed(2),
+      row.note || '',
+    ]);
+
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    const filename = `sip_${result.inputs.ticker}_${result.inputs.startDate}_to_${result.inputs.endDate}_first_trading_day_close.csv`;
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen py-8 md:py-12">
+      <div className="container">
+        {/* Hero Section */}
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            <span className="gradient-text">Patience Pays</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl mx-auto">
+            Long-term investing rewards consistency. Backtest your SIP/DCA strategy and see how patience compounds over time.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </header>
+
+        {/* Input Form */}
+        <section className="max-w-3xl mx-auto mb-12">
+          <InputForm onSubmit={handleSubmit} isLoading={isLoading} />
+        </section>
+
+        {/* Error Display */}
+        {error && (
+          <div className="max-w-3xl mx-auto mb-8">
+            <div className="glass-card p-4 border-l-4 border-[var(--color-danger)]">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">⚠️</span>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-danger)]">Error</h4>
+                  <p className="text-sm text-[var(--color-text-secondary)]">{error}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Results Section */}
+        {result && (
+          <div className="space-y-8 fade-in">
+            {/* Summary Tiles */}
+            <section>
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                🎯 Investment Summary
+                <span className="text-base font-normal text-[var(--color-text-secondary)]">
+                  for {result.inputs.ticker}
+                </span>
+              </h2>
+              <SummaryTiles summary={result.summary} ticker={result.inputs.ticker} />
+            </section>
+
+            {/* Charts */}
+            <section>
+              <Charts
+                monthly={result.monthly}
+                totalContributed={result.summary.totalContributed}
+              />
+            </section>
+
+            {/* Monthly Table */}
+            <section>
+              <MonthlyTable
+                monthly={result.monthly}
+                ticker={result.inputs.ticker}
+                onExportCSV={handleExportCSV}
+              />
+            </section>
+
+            {/* Warnings */}
+            {result.meta.warnings && result.meta.warnings.length > 0 && (
+              <div className="glass-card p-4 border-l-4 border-[var(--color-warning)]">
+                <h4 className="font-semibold text-[var(--color-warning)] mb-2">⚠️ Warnings</h4>
+                <ul className="text-sm text-[var(--color-text-secondary)] space-y-1">
+                  {result.meta.warnings.map((warning, i) => (
+                    <li key={i}>• {warning}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Why This Works Section */}
+        <section className="mt-12">
+          <WhyThisWorks />
+        </section>
+
+        {/* Footer */}
+        <footer className="mt-16 pt-8 border-t border-[var(--color-bg-tertiary)] text-center">
+          <p className="text-sm text-[var(--color-text-muted)]">
+            Data provided by Yahoo Finance. Past performance does not guarantee future results.
+            This tool is for educational purposes only and not financial advice.
+          </p>
+          <p className="text-xs text-[var(--color-text-muted)] mt-2">
+            Last data refresh: {result?.meta.lastCloseDate || 'N/A'}
+          </p>
+        </footer>
+      </div>
+    </main>
   );
 }
