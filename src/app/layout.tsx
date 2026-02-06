@@ -1,5 +1,6 @@
 ﻿import './globals.css';
 import { Fraunces, Space_Grotesk } from 'next/font/google';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const heading = Fraunces({
   subsets: ['latin'],
@@ -20,8 +21,10 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className={`${heading.variable} ${body.variable}`}>
-      <body>{children}</body>
+    <html lang='en' className={`${heading.variable} ${body.variable}`} suppressHydrationWarning>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

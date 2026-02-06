@@ -24,6 +24,8 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hasSelected, setHasSelected] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     setQuery(value);
@@ -33,30 +35,47 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
+    if (abortRef.current) {
+      abortRef.current.abort();
+      abortRef.current = null;
+    }
 
     if (query.length < 2) {
       setResults([]);
       setIsOpen(false);
+      setIsLoading(false);
       return;
     }
 
     if (hasSelected) {
       setHasSelected(false);
+      setIsLoading(false);
       return;
     }
 
     setIsLoading(true);
+    const requestId = (requestIdRef.current += 1);
+    const controller = new AbortController();
+    abortRef.current = controller;
     debounceRef.current = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+          signal: controller.signal
+        });
         const data = await response.json();
-        setResults(data.results || []);
-        setIsOpen((data.results || []).length > 0);
+        if (requestIdRef.current !== requestId) return;
+        const nextResults = Array.isArray(data.results) ? data.results : [];
+        setResults(nextResults);
+        setIsOpen(nextResults.length > 0);
         setSelectedIndex(-1);
       } catch {
+        if (controller.signal.aborted) return;
         setResults([]);
+        setIsOpen(false);
       } finally {
-        setIsLoading(false);
+        if (requestIdRef.current === requestId) {
+          setIsLoading(false);
+        }
       }
     }, 300);
 
@@ -64,6 +83,7 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);
       }
+      controller.abort();
     };
   }, [query, hasSelected]);
 
@@ -84,11 +104,17 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
   }, []);
 
   const handleSelect = (result: SearchResult) => {
+    if (abortRef.current) {
+      abortRef.current.abort();
+      abortRef.current = null;
+    }
+    requestIdRef.current += 1;
     setHasSelected(true);
     setQuery(result.symbol);
     onChange(result.symbol);
     setIsOpen(false);
     setResults([]);
+    setSelectedIndex(-1);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -118,6 +144,8 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.toUpperCase();
     setQuery(newValue);
+    setIsOpen(false);
+    setSelectedIndex(-1);
     if (newValue && !newValue.includes(' ') && /^[A-Z0-9.-]+$/.test(newValue)) {
       onChange(newValue);
     }
@@ -138,26 +166,26 @@ export default function TickerSearch({ value, onChange }: TickerSearchProps) {
         required
       />
       {isLoading && (
-        <span className='absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400'>...</span>
+        <span className='ticker-loading absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400'>...</span>
       )}
 
       {isOpen && results.length > 0 && (
         <div
           ref={dropdownRef}
-          className='absolute z-50 mt-1 w-full overflow-hidden rounded-xl border border-mist bg-white/95 shadow-soft'
+          className='ticker-dropdown absolute z-50 mt-1 w-full overflow-hidden rounded-xl border border-mist bg-white/95 shadow-soft'
         >
           {results.map((result, index) => (
             <button
               key={result.symbol}
               type='button'
               onClick={() => handleSelect(result)}
-              className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${
-                index === selectedIndex ? 'bg-mist/70' : 'hover:bg-mist/50'
+              className={`ticker-option flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${
+                index === selectedIndex ? 'ticker-option--active bg-mist/70' : 'hover:bg-mist/50'
               }`}
             >
               <span className='min-w-[60px] font-semibold text-ink'>{result.symbol}</span>
               <span className='flex-1 truncate text-slate-600'>{result.name}</span>
-              <span className='rounded-full bg-sand px-2 py-1 text-[10px] uppercase tracking-wide text-slate-500'>
+              <span className='ticker-pill rounded-full bg-sand px-2 py-1 text-[10px] uppercase tracking-wide text-slate-500'>
                 {result.type}
               </span>
             </button>

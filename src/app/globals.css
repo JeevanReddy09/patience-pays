@@ -41,3 +41,118 @@ textarea {
 ::selection {
   background: rgba(247, 200, 115, 0.5);
 }
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+html[data-theme='dark'] body {
+  color: #e2e8f0;
+  background: radial-gradient(circle at top, rgba(45, 212, 191, 0.18), transparent 55%),
+    linear-gradient(180deg, #0b1120 0%, #0f172a 45%, #101827 100%);
+}
+
+html[data-theme='dark'] .text-ink {
+  color: #e2e8f0;
+}
+
+html[data-theme='dark'] .text-slate-700 {
+  color: #cbd5e1;
+}
+
+html[data-theme='dark'] .text-slate-600 {
+  color: #b6c2d1;
+}
+
+html[data-theme='dark'] .text-slate-500 {
+  color: #9fb0c7;
+}
+
+html[data-theme='dark'] .text-slate-400 {
+  color: #8da0b5;
+}
+
+html[data-theme='dark'] .text-sea {
+  color: #5eead4;
+}
+
+html[data-theme='dark'] .border-mist {
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+html[data-theme='dark'] .border-slate-200 {
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+html[data-theme='dark'] .border-slate-100 {
+  border-color: rgba(148, 163, 184, 0.15);
+}
+
+html[data-theme='dark'] .bg-white\/85 {
+  background-color: rgba(15, 23, 42, 0.85);
+}
+
+html[data-theme='dark'] .bg-white\/80 {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+html[data-theme='dark'] .bg-white\/75 {
+  background-color: rgba(15, 23, 42, 0.75);
+}
+
+html[data-theme='dark'] .bg-white\/70 {
+  background-color: rgba(15, 23, 42, 0.7);
+}
+
+html[data-theme='dark'] .bg-white\/60 {
+  background-color: rgba(15, 23, 42, 0.6);
+}
+
+html[data-theme='dark'] .bg-white {
+  background-color: #0f172a;
+}
+
+html[data-theme='dark'] .bg-sand {
+  background-color: #0b1120;
+}
+
+html[data-theme='dark'] .shadow-soft {
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.45);
+}
+
+html[data-theme='dark'] ::selection {
+  background: rgba(94, 234, 212, 0.35);
+}
+
+html[data-theme='dark'] input,
+html[data-theme='dark'] select,
+html[data-theme='dark'] textarea {
+  color: #e2e8f0;
+}
+
+html[data-theme='dark'] ::placeholder {
+  color: #94a3b8;
+}
+
+html[data-theme='dark'] .ticker-dropdown {
+  background-color: rgba(15, 23, 42, 0.98);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+html[data-theme='dark'] .ticker-option {
+  color: #e2e8f0;
+}
+
+html[data-theme='dark'] .ticker-option:hover,
+html[data-theme='dark'] .ticker-option--active {
+  background-color: rgba(94, 234, 212, 0.12);
+}
+
+html[data-theme='dark'] .ticker-pill {
+  background-color: rgba(30, 41, 59, 0.9);
+  color: #cbd5e1;
+}
+
+html[data-theme='dark'] .ticker-loading {
+  color: #9fb0c7;
+}

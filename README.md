@@ -1,120 +1,34 @@
-# Patience Pays 💰
+﻿# Patience Pays
 
-**Long-term investing rewards consistency.** Backtest your SIP/DCA (Systematic Investment Plan / Dollar Cost Averaging) strategy and see how patience compounds over time.
+Long-term investing rewards consistency. Patience Pays lets you backtest a simple monthly SIP/DCA strategy into a stable stock and see how patience plus recurring contributions compound over time.
 
-![Patience Pays Screenshot](screenshot.png)
+## Stack
+- Next.js (TypeScript) with Tailwind
+- Recharts for charts
+- Yahoo Finance chart API (server-side fetch) with Stooq fallback
 
-## Features
+## Run locally
+1. npm install
+2. npm run dev
+3. Open http://localhost:3000
 
-- 📊 **SIP Backtester** - Test recurring investment strategies on any stock
-- 📈 **Interactive Charts** - Visualize portfolio growth over time
-- 💸 **Summary Statistics** - See total gains, CAGR, and more
-- 📋 **Monthly Breakdown** - Detailed transaction history table
-- 📥 **CSV Export** - Download your data for further analysis
-- 🎯 **Demo Preset** - Try it instantly with GOOGL
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-
-### Installation
-
-```bash
-# Clone or navigate to the project
-cd patience-pays
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Running Tests
-
-```bash
-# Run tests in watch mode
-npm test
-
-# Run tests once
-npm run test:run
-```
-
-## API Reference
-
-### GET /api/sip
-
-Calculate SIP returns for a given stock and date range.
-
-**Parameters:**
-
-| Parameter | Type   | Default                  | Description                    |
-|-----------|--------|--------------------------|--------------------------------|
-| ticker    | string | required                 | Stock ticker (e.g., GOOGL)     |
-| start     | string | required                 | Start date (YYYY-MM-DD)        |
-| end       | string | required                 | End date (YYYY-MM-DD)          |
-| amount    | number | 100                      | Monthly contribution ($)       |
-| rule      | string | first_trading_day_close  | Execution rule                 |
-
-**Example Request:**
-
-```
+## API
 GET /api/sip?ticker=GOOGL&start=2023-08-01&end=2026-02-05&amount=100&rule=first_trading_day_close
-```
 
-**Response:**
+## Data sources
+- Primary: Yahoo Finance chart API (server-side fetch)
+- Fallback: Stooq daily CSV
 
-```json
-{
-  "inputs": {
-    "ticker": "GOOGL",
-    "monthlyContribution": 100,
-    "startDate": "2023-08-01",
-    "endDate": "2026-02-05",
-    "executionRule": "first_trading_day_close",
-    "currency": "USD"
-  },
-  "summary": {
-    "numberOfContributions": 30,
-    "totalContributed": 3000,
-    "totalShares": 15.234,
-    "accountValue": 3450.50,
-    "gainLoss": 450.50,
-    "gainLossPercent": 15.02,
-    "cagr": 8.45
-  },
-  "monthly": [...],
-  "meta": {
-    "dataSource": "yahoo",
-    "lastCloseDate": "2026-02-05",
-    "warnings": []
-  }
-}
-```
+## Caching
+In-memory cache with a 1-hour TTL keyed by ticker and date range.
 
-## Tech Stack
+## UI states
+- Loading: Fetching prices and running the backtest
+- Error: Validation or data fetch errors shown in a banner
+- Results: Summary tiles, charts, CSV download, monthly table
 
-- **Frontend:** Next.js 14 (App Router) + TypeScript + Tailwind CSS
-- **Charts:** Recharts
-- **Data Source:** Yahoo Finance (via yahoo-finance2)
-- **Testing:** Vitest
-
-## Data Source & Limitations
-
-- **Source:** Yahoo Finance (unofficial API via yahoo-finance2)
-- **Caching:** 1-hour in-memory cache to reduce API calls
-- **Rate Limits:** May be rate-limited during heavy usage
-- **Accuracy:** Historical prices may have minor discrepancies
-
-## Disclaimer
-
-This tool is for **educational purposes only** and does not constitute financial advice. Past performance does not guarantee future results. Always consult a financial advisor before making investment decisions.
-
-## License
-
-MIT
+## Limitations
+- USD display only
+- Free data sources can be delayed or incomplete
+- Dividends and splits are not applied
+- Educational use only, not investment advice

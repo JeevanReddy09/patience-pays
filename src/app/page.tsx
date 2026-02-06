@@ -4,6 +4,7 @@ import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
 import { monthlyRowsToCsv } from '@/lib/csv';
 import type { MonthlyRow, SipResponse, SipSummary } from '@/lib/types';
 import TickerSearch from '@/components/TickerSearch';
+import ThemeToggle from '@/components/ThemeToggle';
 import {
   Area,
   AreaChart,
@@ -335,10 +336,14 @@ export default function Home() {
       </div>
 
       <header className='relative px-6 pt-12 pb-14'>
-        <div className='mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]'>
-          <div>
-            <span className='text-xs uppercase tracking-[0.3em] text-sea'>Patience Pays</span>
-            <h1 className='mt-3 text-4xl font-semibold text-ink md:text-6xl'>Patience Pays</h1>
+        <div className='mx-auto max-w-6xl'>
+          <div className='flex justify-end pb-6'>
+            <ThemeToggle />
+          </div>
+          <div className='grid gap-10 lg:grid-cols-[1.1fr_0.9fr]'>
+            <div>
+              <span className='text-xs uppercase tracking-[0.3em] text-sea'>Patience Pays</span>
+              <h1 className='mt-3 text-4xl font-semibold text-ink md:text-6xl'>Patience Pays</h1>
             <p className='mt-4 text-lg text-slate-700'>Long-term investing rewards consistency.</p>
             <div className='mt-6 rounded-2xl border border-mist bg-white/70 p-5 shadow-soft'>
               <p className='text-sm text-slate-700'>
@@ -358,9 +363,9 @@ export default function Home() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className='rounded-2xl border border-mist bg-white/80 p-6 shadow-soft'>
-            <h2 className='text-lg font-semibold text-ink'>Backtest inputs</h2>
-            <p className='mt-1 text-sm text-slate-600'>USD display only for now.</p>
+            <form onSubmit={handleSubmit} className='rounded-2xl border border-mist bg-white/80 p-6 shadow-soft'>
+              <h2 className='text-lg font-semibold text-ink'>Backtest inputs</h2>
+              <p className='mt-1 text-sm text-slate-600'>USD display only for now.</p>
 
             <div className='mt-5 grid gap-4'>
               <label className='grid gap-2 text-sm text-slate-700'>
@@ -432,7 +437,8 @@ export default function Home() {
                 Demo preset
               </button>
             </div>
-          </form>
+            </form>
+          </div>
         </div>
       </header>
 
